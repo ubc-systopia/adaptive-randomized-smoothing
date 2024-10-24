@@ -1,0 +1,68 @@
+data:
+  dataset: "cifar10"
+  num_classes: 10
+  dataset_path: "./datasets"
+  transform:
+    pad_size: 16
+    padded_img_path: "/scratch1/data/bg20/64_64_size"
+    num_image_locations: "edges"
+    background: "nature"
+    face_feature: None
+
+arch:
+  total_sigma: 0.5
+  num_query: 1
+  mask_type: "vanilla" # refer to cohen's settings, i.e. no mask learned
+  base_classifier: "cifar_resnet110"
+
+trainer:
+  device: "cuda"
+  epoch: 100
+  mask_recon: 0
+  mask_supervise: 0
+  train_batch_size: 300
+  test_batch_size: 30
+  test_sample_copy: 10
+  classifier: 
+    optimizer: AdamW
+    scheduler: StepLR
+    lr: 0.01
+    weight_decay: 1e-4
+    momentum: 0.9  
+    step_size: 30
+    gamma: 0.1
+  mask: 
+    optimizer: AdamW
+    scheduler: StepLR
+    lr: 1e-3
+    weight_decay: 1e-4
+    momentum: 0.9
+    step_size: 30
+    gamma: 0.5
+
+visualize:
+  save_fig_epoch: 10 
+  save_intermediate_imgs: False
+  num_to_store: 100 
+  save_intermediate_fig: False
+  which_batch: 5
+
+certify:
+  cert_batch_size: 100
+  n_pred: 100
+  n_cert: 50000
+  failure_prob: 0.05
+  adv: "linf"
+  skip: 50
+  max: -1
+
+run_description: "cifar_sig05_pad16_cohen"
+
+
+
+
+
+
+
+
+

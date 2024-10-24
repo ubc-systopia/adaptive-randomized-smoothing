@@ -1,0 +1,61 @@
+data:
+  dataset: "celeba"
+  num_classes: 1
+  dataset_path: "./datasets"
+  transform:
+    pad_size: 10
+    padded_img_path: None
+    num_image_locations: "random"
+    background: "black"
+    face_feature: "mouth"
+  multilabel_overwrite: 21
+
+arch:
+  total_sigma: 0.75
+  num_query: 1
+  mask_type: "static"
+  mask_init: "identity"
+  base_classifier: "resnet50" 
+
+trainer:
+  device: "cuda"
+  epoch: 24
+  mask_recon: 0
+  mask_supervise: 0
+  train_batch_size: 64
+  test_batch_size: 20
+  test_sample_copy: 5
+  classifier: 
+    optimizer: SGD
+    scheduler: StepLR
+    lr: 0.05
+    weight_decay: 0
+    momentum: 0
+    step_size: 3
+    gamma: 0.8
+  mask: 
+    optimizer: SGD
+    scheduler: StepLR
+    lr: 0.01
+    weight_decay: 0
+    momentum: 0
+    step_size: 100
+    gamma: 1.0
+
+visualize:
+  save_fig_epoch: 10 
+  save_intermediate_imgs: False
+  num_to_store: 100 
+  save_intermediate_fig: False
+  which_batch: 0
+
+certify:
+  cert_batch_size: 100
+  n_pred: 100
+  n_cert: 10000
+  failure_prob: 0.05
+  adv: "linf"
+  skip: 200
+  max: -1
+
+run_description: "celeba_sigma075_static"

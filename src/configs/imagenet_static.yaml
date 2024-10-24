@@ -1,0 +1,60 @@
+data:
+  dataset: "imagenet"
+  num_classes: 1000
+  dataset_path: None
+  transform:
+    pad_size: 0
+    padded_img_path: None
+    num_image_locations: None
+    background: None
+    face_feature: None
+
+arch:
+  total_sigma: 1.0
+  num_query: 1
+  mask_type: "static"
+  mask_init: "identity"
+  base_classifier: "resnet50"
+
+trainer:
+  device: "cuda"
+  epoch: 90
+  mask_recon: 0
+  mask_supervise: 0
+  train_batch_size: 300
+  test_batch_size: 100
+  test_sample_copy: 10
+  classifier: 
+    optimizer: SGD
+    scheduler: StepLR
+    lr: 0.1
+    weight_decay: 1e-4
+    momentum: 0.9  
+    step_size: 30
+    gamma: 0.1
+  mask: 
+    optimizer: SGD
+    scheduler: StepLR
+    lr: 0.05
+    weight_decay: 1e-4 
+    momentum: 0.9
+    step_size: 30
+    gamma: 0.1
+
+visualize:
+  save_fig_epoch: 10 
+  save_intermediate_imgs: False
+  num_to_store: 100 
+  save_intermediate_fig: False
+  which_batch: 5
+
+certify:
+  cert_batch_size: 800
+  n_pred: 100
+  n_cert: 100000
+  failure_prob: 0.01
+  adv: "linf"
+  skip: 100
+  max: -1
+
+run_description: "imagenet_sig1_static"

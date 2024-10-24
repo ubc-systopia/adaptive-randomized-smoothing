@@ -1,0 +1,67 @@
+data:
+  dataset: "cifar10"
+  num_classes: 10
+  dataset_path: "./datasets"
+  transform:
+    pad_size: 16  # resulting image size is 32 + pad_size * 2, check important notes in README
+    padded_img_path: "/scratch1/data/bg20/64_64_size" #for cifar settings only
+    num_image_locations: "edges" # choice of ["edges", "random"], cifar image overlays on BG-20k images only at edges
+    background: "nature" # choice of ["nature , "black"], nature means BG-20k 
+    face_feature: None  # only for celeba
+
+arch:
+  total_sigma: 0.5  # total sigma of the noises added
+  num_query: 2  # 2 query arch relates to ars and uses two_query_arch.py; 1 query arch related to static or Cohen et al. and uses single_query_arch.py
+  mask_model: "unet" 
+  mask_type: "adaptive"  # choice of ["adaptive", "static", "vanilla"]
+  first_query_budget_frac: 0.5 # do not remove for ars, how much you want to split the total sigma budget for two queries
+  base_classifier: "cifar_resnet110"
+
+unet:
+  in_channels: 3
+  out_channels: 1
+  channel: 32
+
+trainer:
+  device: "cuda"
+  epoch: 100
+  mask_recon: 0 # option for supervised training, with aim to reconstruct original image of cifar for better training; but we have moved to unsupervised training, so it is always set to 0
+  mask_supervise: 0 # option for supervised training, with extra information of ground truth mask; but we have moved to unsupervised training, so it is always set to 0
+  train_batch_size: 300
+  test_batch_size: 30
+  test_sample_copy: 10
+  classifier: 
+    optimizer: AdamW
+    scheduler: StepLR
+    lr: 0.01
+    weight_decay: 1e-4
+    momentum: 0.9  #does not influence AdamW, but should specify for SGD
+    step_size: 30
+    gamma: 0.1
+  mask: 
+    optimizer: AdamW
+    scheduler: StepLR
+    lr: 1e-3
+    weight_decay: 1e-4 
+    momentum: 0.9
+    step_size: 30
+    gamma: 0.5
+
+visualize:
+  save_fig_epoch: 10  # every X epochs, save the intermediate imgs and fig
+  save_intermediate_imgs: True  # whether to save intermediate images, can be used after training is finished
+  num_to_store: 100  # how many intermediate images you want to save, note during testing, there are trainer.test_sample_copy copies, say 10, 
+  # if you set num_to_store = 200, you will see 20 different images, but all of 200 images are saved
+  save_intermediate_fig: True # whether to save one pipline figure
+  which_batch: 5 # during which batch, you want to same the images
+
+certify:
+  cert_batch_size: 100
+  n_pred: 100  # get n_pred monte carlo samples for prediction
+  n_cert: 50000  # get n_cert monte carlo samples for certification
+  failure_prob: 0.05 # controls abstain prediction
+  adv: "linf" # using L_infinity norm
+  skip: 50  # only certify every skip examples, and stop after max examples
+  max: -1 # when set to -1, stop after all the test data
+
+run_description: "cifar_sig05_pad16_ars"

@@ -1,0 +1,69 @@
+data:
+  dataset: "celeba"
+  num_classes: 1
+  dataset_path: "./datasets"
+  transform:
+    pad_size: 10  # controls area around mouth; how many pixels in all directions around a mouth/other feature must be within the image
+    padded_img_path: None # for cifar
+    num_image_locations: "random" # place image randomly anywhere within the padded image
+    background: "black"
+    face_feature: "mouth" # feature you want to use to center the transform on, if you want eyes to always be in the image, use "eyes"
+  multilabel_overwrite: 21 # label for which you want to do binary classification, label 21 is “mouth slightly open” 
+  # (in multilabel you can have classes [smile, mouth slightly open, moustache] and you predict [1, 1, 0] if you think there is smile, mouth are slightly open, but no moustache
+  # if you only want to predict if mouth are slightly open, you can use multilabel_overwrite=21)
+
+arch:
+  total_sigma: 0.75
+  num_query: 2
+  mask_model: "unet"
+  mask_type: "adaptive" 
+  first_query_budget_frac: 0.5
+  base_classifier: "resnet50"
+
+unet:
+  in_channels: 3
+  out_channels: 1
+  channel: 64
+
+trainer:
+  device: "cuda"
+  epoch: 24
+  mask_recon: 0
+  mask_supervise: 0
+  train_batch_size: 64
+  test_batch_size: 20
+  test_sample_copy: 5
+  classifier: 
+    optimizer: SGD
+    scheduler: StepLR
+    lr: 0.05
+    weight_decay: 0
+    momentum: 0
+    step_size: 3
+    gamma: 0.8
+  mask: 
+    optimizer: SGD
+    scheduler: StepLR
+    lr: 0.01
+    weight_decay: 0
+    momentum: 0
+    step_size: 100
+    gamma: 1.0
+
+visualize:
+  save_fig_epoch: 10 
+  save_intermediate_imgs: False
+  num_to_store: 100 
+  save_intermediate_fig: False
+  which_batch: 0
+
+certify:
+  cert_batch_size: 100
+  n_pred: 100
+  n_cert: 10000
+  failure_prob: 0.05
+  adv: "linf"
+  skip: 200
+  max: -1
+
+run_description: "celeba_sigma075_ars"
