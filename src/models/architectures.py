@@ -1,9 +1,9 @@
 import torch
 import torch.backends.cudnn as cudnn
 from torchvision.models.resnet import resnet50
-from multiquery_randomized_smoothing.src.models.cifar_resnet import resnet as resnet_cifar
-from multiquery_randomized_smoothing.src.dataset import get_normalize_layer, PreProcessLayer
-from multiquery_randomized_smoothing.src.models.unet import UNet
+from models.cifar_resnet import resnet as resnet_cifar
+from dataset import get_normalize_layer, PreProcessLayer
+from models.unet import UNet
 
 ARCHITECTURES = ["resnet50", "cifar_resnet110"]
 

@@ -18,16 +18,11 @@ matplotlib.use('Agg')  # Must be before importing matplotlib.pyplot or pylab!
 import torch.distributed as dist
 import torch.utils.data.distributed
 
-from multiquery_randomized_smoothing.src.utils import (set_seed,
-                                                       get_image_size,
-                                                       get_save_directory_path,
-                                                       init_logfile,
-                                                       log,
-                                                       get_optimizer,
-                                                       get_scheduler)
-from multiquery_randomized_smoothing.src.dataset import get_dataset
-from multiquery_randomized_smoothing.ddp.two_query_arch_ddp import TWO_QUERY_ARCH_DDP
-from multiquery_randomized_smoothing.src.models.single_query_arch import SINGLE_QUERY_ARCH
+from src.utils import (set_seed, get_image_size, get_save_directory_path,
+                       init_logfile, log, get_optimizer, get_scheduler)
+from src.dataset import get_dataset
+from src.models.single_query_arch import SINGLE_QUERY_ARCH
+from two_query_arch_ddp import TWO_QUERY_ARCH_DDP
 
 
 ######################################################################

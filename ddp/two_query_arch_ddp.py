@@ -7,8 +7,8 @@ import torch
 import torch.nn as nn
 import torch.distributions as D
 
-from multiquery_randomized_smoothing.src.models import architectures
-from multiquery_randomized_smoothing.src.utils import get_image_size, convert_image_np
+from src.models import architectures
+from src.utils import get_image_size, convert_image_np
 
 
 class TWO_QUERY_ARCH_DDP(nn.Module):

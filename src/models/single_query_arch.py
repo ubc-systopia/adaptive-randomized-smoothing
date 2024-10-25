@@ -5,8 +5,8 @@ import torch
 import torch.nn as nn
 import torch.distributions as D
 
-from multiquery_randomized_smoothing.src.models import architectures
-from multiquery_randomized_smoothing.src.utils import get_image_size
+from models import architectures
+from utils import get_image_size
 
 class SINGLE_QUERY_ARCH(nn.Module):
     def __init__(self, conf):

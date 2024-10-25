@@ -91,10 +91,10 @@ class PadAndShift(object):
             print("using nature background!")
             if split == "train":
                 # path to bg-20k train dataset images
-                self.random_bg_image_paths = glob.glob(os.path.join(self.padded_img_path, "train/*"))
+                self.random_bg_image_paths = glob.glob(os.path.join(self.padded_img_path, "train", "*"))
             elif split == "test":
                 # path to bg-20k test dataset images
-                self.random_bg_image_paths = glob.glob(os.path.join(self.padded_img_path, "test/*"))
+                self.random_bg_image_paths = glob.glob(os.path.join(self.padded_img_path, "test", "*"))
                 
     def __call__(self, image):
         # assume the image is of PIL form, hence first convert it to a numpy array

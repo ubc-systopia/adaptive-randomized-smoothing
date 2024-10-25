@@ -15,16 +15,11 @@ from torchsummary import summary
 import matplotlib
 matplotlib.use('Agg')  # Must be before importing matplotlib.pyplot or pylab!
 
-from multiquery_randomized_smoothing.src.utils import (set_seed,
-                                                       get_image_size,
-                                                       get_save_directory_path,
-                                                       init_logfile,
-                                                       log,
-                                                       get_optimizer,
-                                                       get_scheduler)
-from multiquery_randomized_smoothing.src.dataset import get_dataset
-from multiquery_randomized_smoothing.src.models.two_query_arch import TWO_QUERY_ARCH
-from multiquery_randomized_smoothing.src.models.single_query_arch import SINGLE_QUERY_ARCH
+from utils import (set_seed, get_image_size, get_save_directory_path,
+                   init_logfile, log, get_optimizer, get_scheduler)
+from dataset import get_dataset
+from models.two_query_arch import TWO_QUERY_ARCH
+from models.single_query_arch import SINGLE_QUERY_ARCH
 
 
 ######################################################################

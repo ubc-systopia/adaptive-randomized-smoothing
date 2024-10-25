@@ -18,10 +18,10 @@ from statsmodels.stats.proportion import proportion_confint
 import sys
 sys.path.append("..")
 
-from multiquery_randomized_smoothing.src.dataset import get_dataset
-from multiquery_randomized_smoothing.src.utils import set_seed, get_image_size
-from multiquery_randomized_smoothing.src.models.single_query_arch import SINGLE_QUERY_ARCH
-from multiquery_randomized_smoothing.src.models.two_query_arch import TWO_QUERY_ARCH
+from dataset import get_dataset
+from utils import set_seed, get_image_size
+from models.single_query_arch import SINGLE_QUERY_ARCH
+from models.two_query_arch import TWO_QUERY_ARCH
 
 
 
